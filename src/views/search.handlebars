@@ -1,18 +1,18 @@
-<div class="row">
-    <div class="col-md-12 mb-4">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mb-0">
-                    <i class="fas fa-search"></i> Tìm Kiếm Lịch Cúp Điện
-                </h4>
+<div class="grid grid-cols-1 gap-4">
+    <div>
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white px-4 py-2 rounded-t-lg">
+                <h3 class="mb-0 font-bold flex items-center">
+                    <i data-lucide="search" class="mr-2 w-5 h-5"></i> Tìm Kiếm Lịch Cúp Điện
+                </h3>
             </div>
             <div class="card-body">
-                <form action="/search" method="GET" class="search-box">
-                    <div class="row">
-                        <div class="col-md-6">
+                <form action="/search" method="GET" class="p-4 rounded-xl shadow bg-base-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
                             <div class="mb-3">
-                                <label for="province" class="form-label">Tỉnh/Thành phố</label>
-                                <select class="form-select" id="province" name="province">
+                                <label for="province" class="form-label block mb-2 font-medium">Tỉnh/Thành phố</label>
+                                <select class="select select-bordered w-full" id="province" name="province">
                                     <option value="">Tất cả</option>
                                     {{#each provinces}}
                                         <option value="{{this}}" {{#if (eq this ../query.province)}}selected{{/if}}>{{this}}</option>
@@ -20,10 +20,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div>
                             <div class="mb-3">
-                                <label for="powerCompany" class="form-label">Công ty Điện lực</label>
-                                <select class="form-select" id="powerCompany" name="powerCompany">
+                                <label for="powerCompany" class="form-label block mb-2 font-medium">Công ty Điện lực</label>
+                                <select class="select select-bordered w-full" id="powerCompany" name="powerCompany">
                                     <option value="">Tất cả</option>
                                     {{#each powerCompanies}}
                                         <option value="{{this}}" {{#if (eq this ../query.powerCompany)}}selected{{/if}}>{{this}}</option>
@@ -32,22 +32,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
                             <div class="mb-3">
-                                <label for="startDate" class="form-label">Từ ngày</label>
-                                <input type="date" class="form-control" id="startDate" name="startDate" value="{{query.startDate}}">
+                                <label for="startDate" class="form-label block mb-2 font-medium">Từ ngày</label>
+                                <input type="date" class="input input-bordered w-full" id="startDate" name="startDate" value="{{query.startDate}}">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div>
                             <div class="mb-3">
-                                <label for="endDate" class="form-label">Đến ngày</label>
-                                <input type="date" class="form-control" id="endDate" name="endDate" value="{{query.endDate}}">
+                                <label for="endDate" class="form-label block mb-2 font-medium">Đến ngày</label>
+                                <input type="date" class="input input-bordered w-full" id="endDate" name="endDate" value="{{query.endDate}}">
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i> Tìm kiếm
+                    <button type="submit" class="btn btn-primary w-full mt-2">
+                        <i data-lucide="search" class="mr-1"></i> Tìm kiếm
                     </button>
                 </form>
             </div>
@@ -56,80 +56,79 @@
 </div>
 
 {{#if outages.length}}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">
-                        <i class="fas fa-bolt"></i> Kết Quả Tìm Kiếm
-                    </h4>
-                    <span class="badge bg-primary">{{outages.length}} kết quả</span>
+    <div class="grid grid-cols-1 gap-4">
+        <div>
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white px-4 py-2 rounded-t-lg flex justify-between items-center">
+                    <h3 class="mb-0 font-bold flex items-center">
+                        <i data-lucide="zap" class="mr-2 w-5 h-5"></i> Kết Quả Tìm Kiếm
+                    </h3>
+                    <span class="badge badge-primary py-1.5 px-2.5">{{outages.length}} kết quả</span>
                 </div>
                 <div class="card-body">
                     {{#each outages}}
-                        <div class="outage-item">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h5 class="mb-2">
-                                        <i class="fas fa-map-marker-alt text-danger"></i>
+                        <div class="mb-3 p-3 rounded-lg border-l-4 border-warning bg-base-200">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="col-span-1 md:col-span-2">
+                                    <h5 class="mb-2 font-bold flex items-center">
+                                        <i data-lucide="map-pin" class="text-error mr-1.5 w-3.5 h-3.5"></i>
                                         {{this.province}} - {{this.district}}
                                     </h5>
-                                    <p class="mb-2">
-                                        <i class="fas fa-building"></i> Khu vực: {{#if (notEmpty this.ward)}}{{this.ward}}{{else}}Không rõ{{/if}}
+                                    <p class="mb-2 flex items-center">
+                                        <i data-lucide="building" class="mr-1.5 w-3.5 h-3.5"></i> Khu vực: {{#if (notEmpty this.ward)}}{{this.ward}}{{else}}Không rõ{{/if}}
                                     </p>
-                                    <p class="mb-2">
-                                        <i class="fas fa-clock"></i> Thời gian: 
-                                        <span class="badge bg-warning">
+                                    <p class="mb-2 flex items-center">
+                                        <i data-lucide="clock" class="mr-1.5 w-3.5 h-3.5"></i> Thời gian: 
+                                        <span class="badge badge-warning py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
                                             {{formatDate this.startTime}} - {{formatDate this.endTime}}
                                         </span>
                                     </p>
-                                    <p class="mb-0">
-                                        <i class="fas fa-info-circle"></i> Lý do: {{this.reason}}
+                                    <p class="mb-0 flex items-center">
+                                        <i data-lucide="info" class="mr-1.5 w-3.5 h-3.5"></i> Lý do: {{this.reason}}
                                     </p>
-                                     <p class="mb-2">
-                                        <i class="fas fa-check-circle text-success"></i>
+                                    <p class="mb-2 flex items-center">
+                                        <i data-lucide="check-circle" class="text-success mr-1.5 w-3.5 h-3.5"></i>
                                         Trạng thái: {{#if this.status}}{{this.status}}{{else}}Không rõ{{/if}}
                                     </p>
                                 </div>
-                                <div class="col-md-4 text-end">
-                                    <span class="badge bg-primary mb-2">
-                                        <i class="fas fa-building"></i> {{#if this.powerCompany}}{{this.powerCompany}}{{else}}Không rõ{{/if}}
+                                <div class="col-span-1">
+                                    <span class="badge badge-primary mb-2 py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                                        <i data-lucide="building" class="mr-1 w-3.5 h-3.5"></i> {{#if this.powerCompany}}{{this.powerCompany}}{{else}}Không rõ{{/if}}
                                     </span>
                                     <br>
-                                    <small class="text-muted">
-                                        <i class="fas fa-clock"></i> Cập nhật: {{formatDate this.createdAt}}
+                                    <small class="text-base-content/70 flex items-center">
+                                        <i data-lucide="clock" class="mr-1 w-3 h-3"></i> Cập nhật: {{formatDate this.createdAt}}
                                     </small>
                                 </div>
                             </div>
                         </div>
-                        
                     {{/each}}
                 </div>
             </div>
         </div>
     </div>
-    <nav aria-label="Page navigation">
-      <ul class="pagination justify-content-center">
+    <nav aria-label="Page navigation" class="my-6">
+      <ul class="pagination flex justify-center space-x-1">
         {{!-- Prev button --}}
         {{#if (gt currentPage 1)}}
           <li class="page-item">
-            <a class="page-link" href="?{{#each query}}{{#unless (eq @key 'page')}}{{#if this}}{{@key}}={{this}}&{{/if}}{{/unless}}{{/each}}page={{decrement currentPage}}">Prev</a>
+            <a class="page-link inline-block px-3 py-1 rounded bg-base-200 hover:bg-primary hover:text-white" href="?{{#each query}}{{#unless (eq @key 'page')}}{{#if this}}{{@key}}={{this}}&{{/if}}{{/unless}}{{/each}}page={{decrement currentPage}}">Prev</a>
           </li>
         {{/if}}
         {{!-- Page numbers --}}
         {{#each pagesToShow}}
           {{#if (eq this ../currentPage)}}
-            <li class="page-item active"><span class="page-link">{{this}}</span></li>
+            <li class="page-item active"><span class="page-link inline-block px-3 py-1 rounded bg-primary text-white">{{this}}</span></li>
           {{else if (eq this '...')}}
-            <li class="page-item disabled"><span class="page-link">...</span></li>
+            <li class="page-item disabled"><span class="page-link inline-block px-3 py-1 rounded bg-base-200">...</span></li>
           {{else}}
-            <li class="page-item"><a class="page-link" href="?{{#each ../query}}{{#unless (eq @key 'page')}}{{#if this}}{{@key}}={{this}}&{{/if}}{{/unless}}{{/each}}page={{this}}">{{this}}</a></li>
+            <li class="page-item"><a class="page-link inline-block px-3 py-1 rounded bg-base-200 hover:bg-primary hover:text-white" href="?{{#each ../query}}{{#unless (eq @key 'page')}}{{#if this}}{{@key}}={{this}}&{{/if}}{{/unless}}{{/each}}page={{this}}">{{this}}</a></li>
           {{/if}}
         {{/each}}
         {{!-- Next button --}}
         {{#if (lt currentPage totalPages)}}
           <li class="page-item">
-            <a class="page-link" href="?{{#each query}}{{#unless (eq @key 'page')}}{{#if this}}{{@key}}={{this}}&{{/if}}{{/unless}}{{/each}}page={{increment currentPage}}">Next &rsaquo;</a>
+            <a class="page-link inline-block px-3 py-1 rounded bg-base-200 hover:bg-primary hover:text-white" href="?{{#each query}}{{#unless (eq @key 'page')}}{{#if this}}{{@key}}={{this}}&{{/if}}{{/unless}}{{/each}}page={{increment currentPage}}">Next &rsaquo;</a>
           </li>
         {{/if}}
       </ul>
@@ -137,7 +136,7 @@
 {{else}}
     {{#if query}}
         <div class="alert alert-info">
-            <i class="fas fa-info-circle"></i> Không tìm thấy lịch cúp điện nào phù hợp với tiêu chí tìm kiếm.
+            <i data-lucide="info" class="mr-2"></i> Không tìm thấy lịch cúp điện nào phù hợp với tiêu chí tìm kiếm.
         </div>
     {{/if}}
 {{/if}}
@@ -168,4 +167,4 @@
       }
     });
   });
-</script> 
+</script>
