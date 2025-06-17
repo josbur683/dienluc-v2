@@ -41,48 +41,53 @@
                     <i data-lucide="moon" id="moon-icon" class="w-5 h-5"></i>
                     <i data-lucide="sun" id="sun-icon" class="w-5 h-5 hidden"></i>
                 </button>
-                <div class="dropdown dropdown-end z-50">
-                    <button class="btn btn-ghost ml-2" id="theme-switcher-btn" onclick="toggleDropdown()">
-                        <i data-lucide="palette" class="w-5 h-5"></i>
-                    </button>
-                    <ul tabindex="0" class="dropdown-content menu p-3 shadow bg-base-100 rounded-box w-80 max-h-80 overflow-y-auto">
-                        <li class="py-1"><a data-theme="light">Light</a></li>
-                        <li class="py-1"><a data-theme="dark">Dark</a></li>
-                        <li class="py-1"><a data-theme="cupcake">Cupcake</a></li>
-                        <li class="py-1"><a data-theme="bumblebee">Bumblebee</a></li>
-                        <li class="py-1"><a data-theme="emerald">Emerald</a></li>
-                        <li class="py-1"><a data-theme="corporate">Corporate</a></li>
-                        <li class="py-1"><a data-theme="synthwave">Synthwave</a></li>
-                        <li class="py-1"><a data-theme="retro">Retro</a></li>
-                        <li class="py-1"><a data-theme="cyberpunk">Cyberpunk</a></li>
-                        <li class="py-1"><a data-theme="valentine">Valentine</a></li>
-                        <li class="py-1"><a data-theme="halloween">Halloween</a></li>
-                        <li class="py-1"><a data-theme="garden">Garden</a></li>
-                        <li class="py-1"><a data-theme="forest">Forest</a></li>
-                        <li class="py-1"><a data-theme="aqua">Aqua</a></li>
-                        <li class="py-1"><a data-theme="lofi">Lofi</a></li>
-                        <li class="py-1"><a data-theme="pastel">Pastel</a></li>
-                        <li class="py-1"><a data-theme="fantasy">Fantasy</a></li>
-                        <li class="py-1"><a data-theme="wireframe">Wireframe</a></li>
-                        <li class="py-1"><a data-theme="black">Black</a></li>
-                        <li class="py-1"><a data-theme="luxury">Luxury</a></li>
-                        <li class="py-1"><a data-theme="dracula">Dracula</a></li>
-                        <li class="py-1"><a data-theme="cmyk">CMYK</a></li>
-                        <li class="py-1"><a data-theme="autumn">Autumn</a></li>
-                        <li class="py-1"><a data-theme="business">Business</a></li>
-                        <li class="py-1"><a data-theme="acid">Acid</a></li>
-                        <li class="py-1"><a data-theme="lemonade">Lemonade</a></li>
-                        <li class="py-1"><a data-theme="night">Night</a></li>
-                        <li class="py-1"><a data-theme="coffee">Coffee</a></li>
-                        <li class="py-1"><a data-theme="winter">Winter</a></li>
-                        <li class="py-1"><a data-theme="dim">Dim</a></li>
-                        <li class="py-1"><a data-theme="nord">Nord</a></li>
-                        <li class="py-1"><a data-theme="sunset">Sunset</a></li>
-                    </ul>
-                </div>
+                <button class="btn btn-ghost ml-2" id="theme-switcher-btn">
+                    <i data-lucide="palette" class="w-5 h-5"></i>
+                </button>
             </div>
         </div>
     </nav>
+
+    <!-- Inline Theme Selector Section -->
+    <section class="bg-base-300 shadow-lg py-2 hidden" id="theme-section">
+        <div class="container mx-auto">
+            <h3 class="text-sm font-medium mb-2 text-base-content">Chọn Giao Diện</h3>
+            <div class="flex flex-wrap gap-2 overflow-x-auto" id="theme-selector">
+                <button class="btn btn-xs" data-theme="light">Light</button>
+                <button class="btn btn-xs" data-theme="dark">Dark</button>
+                <button class="btn btn-xs" data-theme="cupcake">Cupcake</button>
+                <button class="btn btn-xs" data-theme="bumblebee">Bumblebee</button>
+                <button class="btn btn-xs" data-theme="emerald">Emerald</button>
+                <button class="btn btn-xs" data-theme="corporate">Corporate</button>
+                <button class="btn btn-xs" data-theme="synthwave">Synthwave</button>
+                <button class="btn btn-xs" data-theme="retro">Retro</button>
+                <button class="btn btn-xs" data-theme="cyberpunk">Cyberpunk</button>
+                <button class="btn btn-xs" data-theme="valentine">Valentine</button>
+                <button class="btn btn-xs" data-theme="halloween">Halloween</button>
+                <button class="btn btn-xs" data-theme="garden">Garden</button>
+                <button class="btn btn-xs" data-theme="forest">Forest</button>
+                <button class="btn btn-xs" data-theme="aqua">Aqua</button>
+                <button class="btn btn-xs" data-theme="lofi">Lofi</button>
+                <button class="btn btn-xs" data-theme="pastel">Pastel</button>
+                <button class="btn btn-xs" data-theme="fantasy">Fantasy</button>
+                <button class="btn btn-xs" data-theme="wireframe">Wireframe</button>
+                <button class="btn btn-xs" data-theme="black">Black</button>
+                <button class="btn btn-xs" data-theme="luxury">Luxury</button>
+                <button class="btn btn-xs" data-theme="dracula">Dracula</button>
+                <button class="btn btn-xs" data-theme="cmyk">CMYK</button>
+                <button class="btn btn-xs" data-theme="autumn">Autumn</button>
+                <button class="btn btn-xs" data-theme="business">Business</button>
+                <button class="btn btn-xs" data-theme="acid">Acid</button>
+                <button class="btn btn-xs" data-theme="lemonade">Lemonade</button>
+                <button class="btn btn-xs" data-theme="night">Night</button>
+                <button class="btn btn-xs" data-theme="coffee">Coffee</button>
+                <button class="btn btn-xs" data-theme="winter">Winter</button>
+                <button class="btn btn-xs" data-theme="dim">Dim</button>
+                <button class="btn btn-xs" data-theme="nord">Nord</button>
+                <button class="btn btn-xs" data-theme="sunset">Sunset</button>
+            </div>
+        </div>
+    </section>
 
     <div class="drawer">
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
@@ -116,7 +121,6 @@
             const moonIcon = document.getElementById('moon-icon');
             const sunIcon = document.getElementById('sun-icon');
             const themeSwitcherBtn = document.getElementById('theme-switcher-btn');
-            const dropdown = document.querySelector('.dropdown');
             const root = document.documentElement;
 
             // Check for saved theme or system preference
@@ -145,8 +149,8 @@
                 }
             });
 
-            // Theme Switcher Dropdown
-            document.querySelectorAll('.dropdown-content a[data-theme]').forEach(item => {
+            // Theme Switcher Inline Section
+            document.querySelectorAll('#theme-selector button[data-theme]').forEach(item => {
                 item.addEventListener('click', function() {
                     const selectedTheme = this.getAttribute('data-theme');
                     root.setAttribute('data-theme', selectedTheme);
@@ -159,26 +163,15 @@
                         moonIcon.classList.remove('hidden');
                         sunIcon.classList.add('hidden');
                     }
-                    dropdown.classList.remove('dropdown-open');
+                    // Hide the theme section after selection
+                    document.getElementById('theme-section').classList.add('hidden');
                 });
             });
 
-            // Toggle dropdown on button click
-            window.toggleDropdown = function() {
-                dropdown.classList.toggle('dropdown-open');
-            };
-
-            // Ensure dropdown closes on click outside
-            document.addEventListener('click', function(event) {
-                if (!dropdown.contains(event.target) && event.target !== themeSwitcherBtn) {
-                    dropdown.classList.remove('dropdown-open');
-                }
-            });
-
-            // Ensure dropdown toggles on button click
-            themeSwitcherBtn.addEventListener('click', function(event) {
-                event.stopPropagation();
-                dropdown.classList.toggle('dropdown-open');
+            // Toggle Theme Section Visibility
+            themeSwitcherBtn.addEventListener('click', function() {
+                const themeSection = document.getElementById('theme-section');
+                themeSection.classList.toggle('hidden');
             });
         });
     </script>
