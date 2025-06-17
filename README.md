@@ -3,6 +3,8 @@
 Ứng dụng theo dõi lịch cắt điện tại các tỉnh thành Việt Nam.
 Đây là bản fork của inuxmax, ko có khác biệt gì về cách vận hành, chỉ hơi khác chút về giao diện, cập nhật thêm TailwindCSS để hỗ trợ light mode/dark mode và 1 ít theme DailyUI. Tính năng Bản đồ hiện chưa work, đừng click vào kẻo crash app.
 
+![Screenshot](assets/screenshot.png)
+
 ## Tính năng
 
 - Cập nhật tự động thông tin cắt điện từ các nguồn chính thức
