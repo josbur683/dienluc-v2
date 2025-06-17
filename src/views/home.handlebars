@@ -204,7 +204,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 </h3>
             </div>
             <div class="card-body">
-                <form action="/search" method="GET" class="p-4 rounded-xl shadow bg-base-200">
+                <form id="searchForm" class="p-4 rounded-xl shadow bg-base-200">
                     <div class="mb-3">
                         <label for="province" class="form-label block mb-2 font-medium">Tỉnh/Thành phố</label>
                         <select class="select select-bordered w-full" id="province" name="province">
@@ -223,7 +223,7 @@ window.addEventListener('DOMContentLoaded', function() {
                             {{/each}}
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary w-full mt-2">
+                    <button type="button" id="searchButton" class="btn btn-primary w-full mt-2">
                         <i data-lucide="search" class="mr-1"></i> Tìm kiếm
                     </button>
                 </form>
@@ -237,7 +237,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         <i data-lucide="zap" class="mr-2 w-5 h-5"></i> Lịch Cúp Điện Toàn Quốc Mới Nhất
                     </h3>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="searchResults">
                 {{#if outages.length}}
                     {{#each outages}}
                         <div class="mb-3 p-3 rounded-lg border-l-4 border-warning bg-base-200">
@@ -335,6 +335,104 @@ window.addEventListener('DOMContentLoaded', function() {
       });
     });
     lucide.createIcons(); // Ensure icons are initialized
+
+    // provincePowerCompanies sẽ được render thành object JS
+    const provincePowerCompanies = {{{json provincePowerCompanies}}};
+    const allPowerCompanies = Array.from(document.querySelectorAll('#powerCompany option')).map(opt => opt.value).filter(v => v);
+    const powerCompanySelect = document.getElementById('powerCompany');
+    const provinceSelect = document.getElementById('province');
+    const searchButton = document.getElementById('searchButton');
+    const searchResults = document.getElementById('searchResults');
+
+    provinceSelect.addEventListener('change', function() {
+      const selectedProvince = this.value;
+      // Xóa hết option cũ (trừ option đầu tiên)
+      while (powerCompanySelect.options.length > 1) powerCompanySelect.remove(1);
+      let companies = [];
+      if (selectedProvince && provincePowerCompanies[selectedProvince]) {
+        companies = provincePowerCompanies[selectedProvince];
+      } else {
+        companies = allPowerCompanies;
+      }
+      companies.forEach(name => {
+        if (name && name !== 'Tất cả') {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          powerCompanySelect.appendChild(opt);
+        }
+      });
+    });
+
+    searchButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      const province = provinceSelect.value;
+      const powerCompany = powerCompanySelect.value;
+      if (!province) {
+        alert('Vui lòng chọn Tỉnh/Thành phố');
+        return;
+      }
+      let url = `/api/outages?province=${encodeURIComponent(province)}`;
+      if (powerCompany) {
+        url += `&powerCompany=${encodeURIComponent(powerCompany)}`;
+      }
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          let html = '';
+          if (data.outages && data.outages.length > 0) {
+            data.outages.forEach(o => {
+              html += `<div class="mb-3 p-3 rounded-lg border-l-4 border-warning bg-base-200">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="col-span-1 md:col-span-2">
+                    <h5 class="mb-2 font-bold flex items-center">
+                      <i data-lucide="map-pin" class="text-error mr-1.5 w-3.5 h-3.5"></i>
+                      ${o.province || ''} - ${o.district || ''}
+                    </h5>
+                    <p class="mb-2 flex items-center">
+                      <i data-lucide="building" class="mr-1.5 w-3.5 h-3.5"></i> Khu vực: ${o.ward || 'Không rõ'}
+                    </p>
+                    <p class="mb-2 flex items-center">
+                      <i data-lucide="clock" class="mr-1.5 w-3.5 h-3.5"></i> Thời gian: 
+                      <span class="badge badge-warning py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                        ${new Date(o.startTime).toLocaleString('vi-VN')} - ${new Date(o.endTime).toLocaleString('vi-VN')}
+                      </span>
+                    </p>
+                    <p class="mb-0 flex items-center">
+                      <i data-lucide="info" class="mr-1.5 w-3.5 h-3.5"></i> Lý do: ${o.reason || 'Không rõ'}
+                    </p>
+                    <p class="mb-2 flex items-center">
+                      <i data-lucide="check-circle" class="text-success mr-1.5 w-3.5 h-3.5"></i>
+                      Trạng thái: ${o.status ? `<span class="text-success">${o.status}</span>` : 'Không rõ'}
+                    </p>
+                  </div>
+                  <div class="col-span-1">
+                    <span class="badge badge-primary mb-2 py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                      <i data-lucide="building" class="mr-1 w-3.5 h-3.5"></i> ${o.powerCompany || 'Không rõ'}
+                    </span>
+                    <br>
+                    <small class="text-base-content/70 flex items-center">
+                      <i data-lucide="clock" class="mr-1 w-3 h-3"></i> Cập nhật: ${new Date(o.createdAt).toLocaleString('vi-VN')}
+                    </small>
+                  </div>
+                </div>
+              </div>`;
+            });
+          } else {
+            html = `<div class="alert alert-info">
+              <i data-lucide="info" class="mr-2"></i> Không có lịch cúp điện nào được tìm thấy.
+            </div>`;
+          }
+          searchResults.innerHTML = html;
+          lucide.createIcons(); // Reinitialize icons after dynamic content load
+        })
+        .catch(error => {
+          searchResults.innerHTML = `<div class="alert alert-error">
+            <i data-lucide="alert-circle" class="mr-2"></i> Lỗi khi tìm kiếm: ${error.message}
+          </div>`;
+          lucide.createIcons();
+        });
+    });
   });
 </script>
 

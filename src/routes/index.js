@@ -77,6 +77,20 @@ router.get('/', async (req, res) => {
             "TP. Hồ Chí Minh": "Miền Nam", "Bà Rịa - Vũng Tàu": "Miền Nam", "Bình Dương": "Miền Nam", "Bình Phước": "Miền Nam", "Bình Thuận": "Miền Nam", "Cà Mau": "Miền Nam", "Cần Thơ": "Miền Nam", "Đồng Nai": "Miền Nam", "Đồng Tháp": "Miền Nam", "Hậu Giang": "Miền Nam", "Kiên Giang": "Miền Nam", "Long An": "Miền Nam", "Sóc Trăng": "Miền Nam", "Tây Ninh": "Miền Nam", "Tiền Giang": "Miền Nam", "Trà Vinh": "Miền Nam", "Vĩnh Long": "Miền Nam", "An Giang": "Miền Nam", "Bạc Liêu": "Miền Nam", "Bến Tre": "Miền Nam"
         };
 
+        // Mapping tỉnh -> danh sách công ty điện lực
+        const provincePowerCompanies = {};
+        const provinceGroups = await Outage.aggregate([
+            {
+                $group: {
+                    _id: "$province",
+                    powerCompanies: { $addToSet: "$powerCompany" }
+                }
+            }
+        ]);
+        provinceGroups.forEach(group => {
+            provincePowerCompanies[group._id] = group.powerCompanies.filter(pc => pc && pc.length > 0).sort();
+        });
+
         res.render('home', {
             outages,
             provinces: PROVINCES.map(p => p.name),
@@ -85,7 +99,8 @@ router.get('/', async (req, res) => {
             pagesToShow,
             powerCompanies,
             provinceStats,
-            provincesRegion
+            provincesRegion,
+            provincePowerCompanies
         });
     } catch (error) {
         console.error('Error fetching outages:', error);
@@ -104,14 +119,17 @@ router.get('/scrape', async (req, res) => {
   }
 });
 
-// API trả về lịch cắt điện theo tỉnh
+// API trả về lịch cắt điện theo tỉnh và công ty điện lực (nếu có)
 router.get('/api/outages', async (req, res) => {
   try {
-    const { province } = req.query;
+    const { province, powerCompany } = req.query;
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
     if (!province) return res.status(400).json({ error: 'Thiếu tham số province' });
     const query = { province, startTime: { $gte: new Date() } };
+    if (powerCompany) {
+      query.powerCompany = powerCompany;
+    }
     const total = await Outage.countDocuments(query);
     const totalPages = Math.max(1, Math.ceil(total / limit));
     const outages = await Outage.find(query)
@@ -126,4 +144,4 @@ router.get('/api/outages', async (req, res) => {
 });
 
 
-module.exports = router; 
+module.exports = router;
