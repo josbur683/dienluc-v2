@@ -63,7 +63,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/search', require('./routes/search'));
-app.use('/telegram', require('./routes/telegram'));
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
@@ -83,4 +82,4 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-}); 
+});

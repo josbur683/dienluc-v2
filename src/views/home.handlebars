@@ -26,19 +26,20 @@ window.addEventListener('DOMContentLoaded', function() {
       .then(data => {
         if (data.outages && data.outages.length > 0) {
           hideLocationAlert();
-          let html = `<div class='card mb-4 bg-dark text-white border-0'><div class='card-header bg-secondary text-white'><b><i class='fas fa-bolt'></i> Lịch cắt điện tại ${province}</b></div><div class='card-body'>`;
+          let html = `<div class='card mb-4 shadow-lg border-0'><div class='card-header bg-primary text-white px-4 py-2'><b><i data-lucide='zap' class='mr-2 w-5 h-5'></i> Lịch cắt điện tại ${province}</b></div><div class='card-body'>`;
           data.outages.forEach(o => {
-            html += `<div class='mb-3 p-2 outage-item'>
-              <div><i class='fas fa-map-marker-alt text-danger'></i> <b>${o.province || ''}${o.district ? ' - ' + o.district : ''}</b></div>
-              <div><i class='fas fa-building'></i> Khu vực: ${o.ward || 'Không rõ'}</div>
-              <div><i class='fas fa-clock'></i> Thời gian: <span class='badge bg-warning'>${new Date(o.startTime).toLocaleString('vi-VN')} - ${new Date(o.endTime).toLocaleString('vi-VN')}</span></div>
-              <div><i class='fas fa-info-circle'></i> Lý do: ${o.reason || 'Không rõ'}</div>
-              <div><i class='fas fa-check-circle text-success'></i> Trạng thái: ${o.status ? `<span class='text-success'>${o.status}</span>` : 'Không rõ'}</div>
-              <div class='text-end'><span class='badge bg-warning'><i class='fas fa-building'></i> ${o.powerCompany || 'Không rõ'}</span></div>
+            html += `<div class='mb-3 p-3 rounded-lg border-l-4 border-warning bg-base-200'>
+              <div class="flex items-center"><i data-lucide='map-pin' class='text-error mr-2 w-4 h-4'></i> <b>${o.province || ''}${o.district ? ' - ' + o.district : ''}</b></div>
+              <div class="flex items-center"><i data-lucide='building' class='mr-2 w-4 h-4'></i> Khu vực: ${o.ward || 'Không rõ'}</div>
+              <div class="flex items-center"><i data-lucide='clock' class='mr-2 w-4 h-4'></i> Thời gian: <span class='badge badge-warning'>${new Date(o.startTime).toLocaleString('vi-VN')} - ${new Date(o.endTime).toLocaleString('vi-VN')}</span></div>
+              <div class="flex items-center"><i data-lucide='info' class='mr-2 w-4 h-4'></i> Lý do: ${o.reason || 'Không rõ'}</div>
+              <div class="flex items-center"><i data-lucide='check-circle' class='text-success mr-2 w-4 h-4'></i> Trạng thái: ${o.status ? `<span class='text-success'>${o.status}</span>` : 'Không rõ'}</div>
+              <div class='text-end'><span class='badge badge-warning'><i data-lucide='building' class='mr-1'></i> ${o.powerCompany || 'Không rõ'}</span></div>
             </div>`;
           });
           html += `</div></div>`;
           document.getElementById('user-province-outages').innerHTML = html;
+          lucide.createIcons(); // Reinitialize icons after dynamic content load
           // Phân trang
           let pagHtml = '';
           if (data.totalPages > 1) {
@@ -116,46 +117,46 @@ window.addEventListener('DOMContentLoaded', function() {
 </script> 
 
 <!-- Danh sách tỉnh và filter vùng miền -->
-<div class="row">
-  <div class="col-12">
-    <div class="card mb-4 bg-dark text-white border-0" style="box-shadow:none;">
-      <div class="card-header bg-dark text-white border-0" style="font-size:1.2rem;">
-        <b><i class="fas fa-list"></i> Danh sách Công ty Điện lực</b>
+<div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+  <div>
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-primary text-white px-4 py-2 rounded-t-lg">
+        <h3 class="mb-0 font-bold flex items-center"><i data-lucide="list" class="mr-2 w-5 h-5"></i> Danh sách Công ty Điện lực</h3>
       </div>
       <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-12">
-            <div class="btn-group" role="group" aria-label="Lọc vùng miền" id="region-filter">
-              <button type="button" class="btn btn-primary active" data-region="all">Tất cả</button>
-              <button type="button" class="btn btn-secondary" data-region="Miền Bắc">Miền Bắc</button>
-              <button type="button" class="btn btn-secondary" data-region="Miền Trung">Miền Trung</button>
-              <button type="button" class="btn btn-secondary" data-region="Miền Nam">Miền Nam</button>
-            </div>
+        <div class="mb-3 flex justify-center">
+          <div class="btn-group" role="group" aria-label="Lọc vùng miền" id="region-filter">
+            <button type="button" class="btn btn-primary active" data-region="all">Tất cả</button>
+            <button type="button" class="btn btn-secondary" data-region="Miền Bắc">Miền Bắc</button>
+            <button type="button" class="btn btn-secondary" data-region="Miền Trung">Miền Trung</button>
+            <button type="button" class="btn btn-secondary" data-region="Miền Nam">Miền Nam</button>
           </div>
         </div>
-        <div class="row">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {{#each provinceStats}}
-            <div class="col-md-6 col-lg-4 mb-3 province-card" data-region="{{lookup ../provincesRegion _id}}">
-              <div class="card h-100 px-2 py-3 bg-secondary text-white border-0" style="border-radius:12px;">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                  <div>
-                    <b style="font-size:1.1rem;">{{_id}}</b>
-                    <div class="small mt-1" style="color:#b4b4b4;"><i class="fas fa-map-marker-alt"></i> {{lookup ../provincesRegion _id}}</div>
+            <div class="province-card" data-region="{{lookup ../provincesRegion _id}}">
+              <div class="card h-full shadow border-0 bg-base-200">
+                <div class="card-body p-4">
+                  <div class="flex justify-between items-center mb-2">
+                    <div>
+                      <b class="text-lg">{{_id}}</b>
+                      <div class="text-xs text-base-content/70 flex items-center"><i data-lucide="map-pin" class="mr-1 w-3 h-3"></i> {{lookup ../provincesRegion _id}}</div>
+                    </div>
+                    <a href="/search?province={{_id}}" class="text-info text-sm">Chi tiết <i data-lucide="chevron-right" class="inline-block w-4 h-4"></i></a>
                   </div>
-                  <a href="/search?province={{_id}}" class="text-info small">Chi tiết <i class="fas fa-chevron-right"></i></a>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                  <div class="text-center">
-                    <div class="fw-bold text-primary" style="font-size:1.3rem;">{{count}}</div>
-                    <div class="small" style="color:#fff;">Tổng số</div>
-                  </div>
-                  <div class="text-center">
-                    <div class="fw-bold text-success" style="font-size:1.3rem;">{{today}}</div>
-                    <div class="small" style="color:#fff;">Hôm nay</div>
-                  </div>
-                  <div class="text-center">
-                    <div class="fw-bold text-warning" style="font-size:1.3rem;">{{upcoming}}</div>
-                    <div class="small" style="color:#fff;">Sắp tới</div>
+                  <div class="grid grid-cols-3 gap-2 mt-2">
+                    <div class="text-center">
+                      <div class="font-bold text-primary text-xl">{{count}}</div>
+                      <div class="text-xs text-base-content/70">Tổng số</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="font-bold text-success text-xl">{{today}}</div>
+                      <div class="text-xs text-base-content/70">Hôm nay</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="font-bold text-warning text-xl">{{upcoming}}</div>
+                      <div class="text-xs text-base-content/70">Sắp tới</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -167,105 +168,19 @@ window.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12 mb-4">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mb-0">
-                    <i class="fas fa-bolt"></i> Lịch Cúp Điện Toàn Quốc Mới Nhất
-                </h4>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+    <div class="lg:col-span-1">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white px-4 py-2 rounded-t-lg">
+                <h3 class="mb-0 font-bold flex items-center">
+                    <i data-lucide="search" class="mr-2 w-5 h-5"></i> Tìm Kiếm
+                </h3>
             </div>
             <div class="card-body">
-                {{#if outages.length}}
-                    {{#each outages}}
-                        <div class="outage-item">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h5 class="mb-2">
-                                        <i class="fas fa-map-marker-alt text-danger"></i>
-                                        {{this.province}} - {{this.district}}
-                                    </h5>
-                                    <p class="mb-2">
-                                        <i class="fas fa-building"></i> Khu vực: {{#if this.ward}}{{this.ward}}{{else}}Không rõ{{/if}}
-                                    </p>
-                                    <p class="mb-2">
-                                        <i class="fas fa-clock"></i> Thời gian: 
-                                        <span class="badge bg-warning">
-                                            {{formatDate this.startTime}} - {{formatDate this.endTime}}
-                                        </span>
-                                    </p>
-                                    <p class="mb-0">
-                                        <i class="fas fa-info-circle"></i> Lý do: {{this.reason}}
-                                    </p>
-                                    <p class="mb-2">
-                                        <i class="fas fa-check-circle text-success"></i>
-                                        Trạng thái: {{#if this.status}}{{this.status}}{{else}}Không rõ{{/if}}
-                                    </p>
-                                </div>
-                                <div class="col-md-4 text-end">
-                                    <span class="badge bg-primary mb-2">
-                                        <i class="fas fa-building"></i> {{#if this.powerCompany}}{{this.powerCompany}}{{else}}Không rõ{{/if}}
-                                    </span>
-                                    <br>
-                                    <small class="text-muted">
-                                        <i class="fas fa-clock"></i> Cập nhật: {{formatDate this.createdAt}}
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                    {{/each}}
-                {{else}}
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i> Không có lịch cúp điện nào được tìm thấy.
-                    </div>
-                {{/if}}
-            </div>
-        </div>
-    </div>
-</div>
-
-<nav aria-label="Page navigation">
-  <ul class="pagination justify-content-center">
-    {{!-- Prev button --}}
-    {{#if (gt currentPage 1)}}
-      <li class="page-item">
-        <a class="page-link" href="/?page={{decrement currentPage}}">Prev</a>
-      </li>
-    {{/if}}
-
-    {{!-- Page numbers --}}
-    {{#each pagesToShow}}
-      {{#if (eq this ../currentPage)}}
-        <li class="page-item active"><span class="page-link">{{this}}</span></li>
-      {{else if (eq this '...')}}
-        <li class="page-item disabled"><span class="page-link">...</span></li>
-      {{else}}
-        <li class="page-item"><a class="page-link" href="/?page={{this}}">{{this}}</a></li>
-      {{/if}}
-    {{/each}}
-
-    {{!-- Next button --}}
-    {{#if (lt currentPage totalPages)}}
-      <li class="page-item">
-        <a class="page-link" href="/?page={{increment currentPage}}">Next &rsaquo;</a>
-      </li>
-    {{/if}}
-  </ul>
-</nav>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mb-0">
-                    <i class="fas fa-search"></i> Tìm Kiếm
-                </h4>
-            </div>
-            <div class="card-body">
-                <form action="/search" method="GET" class="search-box">
+                <form action="/search" method="GET" class="p-4 rounded-xl shadow bg-base-200">
                     <div class="mb-3">
-                        <label for="province" class="form-label">Tỉnh/Thành phố</label>
-                        <select class="form-select" id="province" name="province">
+                        <label for="province" class="form-label block mb-2 font-medium">Tỉnh/Thành phố</label>
+                        <select class="select select-bordered w-full" id="province" name="province">
                             <option value="">Tất cả</option>
                             {{#each provinces}}
                                 <option value="{{this}}">{{this}}</option>
@@ -273,56 +188,105 @@ window.addEventListener('DOMContentLoaded', function() {
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="powerCompany" class="form-label">Công ty Điện lực</label>
-                        <select class="form-select" id="powerCompany" name="powerCompany">
+                        <label for="powerCompany" class="form-label block mb-2 font-medium">Công ty Điện lực</label>
+                        <select class="select select-bordered w-full" id="powerCompany" name="powerCompany">
                             <option value="">Tất cả</option>
                             {{#each powerCompanies}}
                                 <option value="{{this}}">{{this}}</option>
                             {{/each}}
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">
-                        <i class="fas fa-search"></i> Tìm kiếm
+                    <button type="submit" class="btn btn-primary w-full mt-2">
+                        <i data-lucide="search" class="mr-1"></i> Tìm kiếm
                     </button>
                 </form>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mb-0">
-                    <i class="fab fa-telegram"></i> Nhận Thông Báo
-                </h4>
+    <div class="lg:col-span-2">
+        <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white px-4 py-2 rounded-t-lg">
+                    <h3 class="mb-0 font-bold flex items-center">
+                        <i data-lucide="zap" class="mr-2 w-5 h-5"></i> Lịch Cúp Điện Toàn Quốc Mới Nhất
+                    </h3>
             </div>
             <div class="card-body">
-                <p class="mb-3">
-                    Đăng ký nhận thông báo qua Telegram để không bỏ lỡ thông tin cúp điện mới nhất.
-                </p>
-                <a href="/telegram" class="btn btn-primary w-100">
-                    <i class="fab fa-telegram"></i> Đăng ký Telegram
-                </a>
+                {{#if outages.length}}
+                    {{#each outages}}
+                        <div class="mb-3 p-3 rounded-lg border-l-4 border-warning bg-base-200">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="col-span-1 md:col-span-2">
+                                    <h5 class="mb-2 font-bold flex items-center">
+                                        <i data-lucide="map-pin" class="text-error mr-1.5 w-3.5 h-3.5"></i>
+                                        {{this.province}} - {{this.district}}
+                                    </h5>
+                                    <p class="mb-2 flex items-center">
+                                        <i data-lucide="building" class="mr-1.5 w-3.5 h-3.5"></i> Khu vực: {{#if this.ward}}{{this.ward}}{{else}}Không rõ{{/if}}
+                                    </p>
+                                    <p class="mb-2 flex items-center">
+                                        <i data-lucide="clock" class="mr-1.5 w-3.5 h-3.5"></i> Thời gian: 
+                                        <span class="badge badge-warning py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                                            {{formatDate this.startTime}} - {{formatDate this.endTime}}
+                                        </span>
+                                    </p>
+                                    <p class="mb-0 flex items-center">
+                                        <i data-lucide="info" class="mr-1.5 w-3.5 h-3.5"></i> Lý do: {{this.reason}}
+                                    </p>
+                                    <p class="mb-2 flex items-center">
+                                        <i data-lucide="check-circle" class="text-success mr-1.5 w-3.5 h-3.5"></i>
+                                        Trạng thái: {{#if this.status}}{{this.status}}{{else}}Không rõ{{/if}}
+                                    </p>
+                                </div>
+                                <div class="col-span-1">
+                                    <span class="badge badge-primary mb-2 py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                                        <i data-lucide="building" class="mr-1 w-3.5 h-3.5"></i> {{#if this.powerCompany}}{{this.powerCompany}}{{else}}Không rõ{{/if}}
+                                    </span>
+                                    <br>
+                                    <small class="text-base-content/70 flex items-center">
+                                        <i data-lucide="clock" class="mr-1 w-3 h-3"></i> Cập nhật: {{formatDate this.createdAt}}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <div class="alert alert-info">
+                        <i data-lucide="info" class="mr-2"></i> Không có lịch cúp điện nào được tìm thấy.
+                    </div>
+                {{/if}}
             </div>
         </div>
     </div>
 </div>
 
-<!-- Banner quảng cáo ở ngay dưới hai card Tìm Kiếm & Nhận Thông Báo -->
-<div class="container my-4">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-10">
-      <div class="card bg-warning text-dark text-center shadow-sm border-0" style="border-radius: 16px;">
-        <div class="card-body">
-          <a href="https://mail1s.net" target="_blank" style="text-decoration:none; color:inherit;">
-            <img src="https://mail1s.net/assets/themes/basic/img/dark_logo.png" alt="Quảng cáo" class="img-fluid mb-2" style="max-height:90px;">
-            <div style="font-size:1.2rem; font-weight:bold;">Dịch Vụ Email Ảo Free mail Edu! <span class="badge bg-primary">Xem ngay</span></div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Banner quảng cáo -->
+<nav aria-label="Page navigation" class="my-6">
+  <ul class="pagination flex justify-center space-x-1">
+    {{!-- Prev button --}}
+    {{#if (gt currentPage 1)}}
+      <li class="page-item">
+        <a class="page-link inline-block px-3 py-1 rounded bg-base-200 hover:bg-primary hover:text-white" href="/?page={{decrement currentPage}}">Prev</a>
+      </li>
+    {{/if}}
+
+    {{!-- Page numbers --}}
+    {{#each pagesToShow}}
+      {{#if (eq this ../currentPage)}}
+        <li class="page-item active"><span class="page-link inline-block px-3 py-1 rounded bg-primary text-white">{{this}}</span></li>
+      {{else if (eq this '...')}}
+        <li class="page-item disabled"><span class="page-link inline-block px-3 py-1 rounded bg-base-200">...</span></li>
+      {{else}}
+        <li class="page-item"><a class="page-link inline-block px-3 py-1 rounded bg-base-200 hover:bg-primary hover:text-white" href="/?page={{this}}">{{this}}</a></li>
+      {{/if}}
+    {{/each}}
+
+    {{!-- Next button --}}
+    {{#if (lt currentPage totalPages)}}
+      <li class="page-item">
+        <a class="page-link inline-block px-3 py-1 rounded bg-base-200 hover:bg-primary hover:text-white" href="/?page={{increment currentPage}}">Next &rsaquo;</a>
+      </li>
+    {{/if}}
+  </ul>
+</nav>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -343,9 +307,8 @@ window.addEventListener('DOMContentLoaded', function() {
         });
       });
     });
+    lucide.createIcons(); // Ensure icons are initialized
   });
 </script>
 
-<script data-host="https://1dg.vn" data-dnt="false" src="https://1dg.vn/js/script.js" id="ZwSg9rf6GA" async defer></script>
-</body>
-</html>
+<!-- Removed external script related to Mail1s or advertisements -->

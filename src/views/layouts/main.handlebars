@@ -4,225 +4,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lịch Cúp Điện Việt Nam</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DaisyUI CDN (via Tailwind plugin, requires Tailwind) -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <!-- Google Fonts - Bai Jamjuree -->
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS for Font Application -->
     <style>
-        :root {
-            --primary-color: #23272f;
-            --secondary-color: #3498db;
-            --accent-color: #e67e22;
-            --light-bg: #181a20;
-            --dark-bg: #23272f;
-            --text-color: #f5f6fa;
-            --card-bg: #23272f;
-            --input-bg: #23272f;
-            --input-border: #444857;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-color);
-        }
-
-        .navbar {
-            background-color: var(--dark-bg) !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .navbar-brand, .nav-link {
-            color: var(--text-color) !important;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .nav-link {
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: white !important;
-        }
-
-        .card, .card-header, .card-body {
-            background-color: var(--card-bg) !important;
-            color: var(--text-color) !important;
-        }
-
-        .form-control, .form-select {
-            background-color: var(--input-bg) !important;
-            color: var(--text-color) !important;
-            border-color: var(--input-border) !important;
-        }
-
-        .form-control:focus, .form-select:focus {
-            background-color: var(--input-bg) !important;
-            color: var(--text-color) !important;
-            border-color: var(--secondary-color) !important;
-        }
-
-        .btn-primary {
-            background-color: var(--secondary-color) !important;
-            border-color: var(--secondary-color) !important;
-            color: #fff !important;
-        }
-
-        .btn-primary:hover {
-            background-color: #217dbb !important;
-            border-color: #217dbb !important;
-        }
-
-        .badge {
-            background-color: var(--accent-color) !important;
-            color: #fff !important;
-        }
-
-        .pagination .page-link {
-            background-color: var(--input-bg) !important;
-            color: var(--text-color) !important;
-            border-color: var(--input-border) !important;
-        }
-
-        .pagination .page-item.active .page-link {
-            background-color: var(--secondary-color) !important;
-            color: #fff !important;
-        }
-
-        .alert-info {
-            background-color: #23272f !important;
-            color: #f5f6fa !important;
-            border-color: #444857 !important;
-        }
-
-        .footer {
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-            padding: 20px 0;
-            margin-top: 50px;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .loading i {
-            color: var(--secondary-color);
-            font-size: 2rem;
-        }
-
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-header {
-            background-color: var(--secondary-color);
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-            padding: 15px 20px;
-        }
-
-        .outage-item {
-            background: #23272f;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .outage-item:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-        }
-
-        .search-box {
-            background: #181a20;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-        }
-
-        @media (max-width: 768px) {
-            .card {
-                margin-bottom: 15px;
-            }
-            
-            .outage-item {
-                padding: 10px;
-            }
+            font-family: 'Bai Jamjuree', sans-serif;
         }
     </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-bolt"></i> Lịch Cúp Điện VN
+<body class="bg-base-100 text-base-content">
+    <nav class="navbar bg-base-300 shadow-lg">
+        <div class="container mx-auto">
+            <a class="navbar-brand flex items-center text-xl font-bold text-base-content" href="/">
+                <i data-lucide="zap" class="mr-2 w-6 h-6"></i> Lịch Cúp Điện VN
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">
-                            <i class="fas fa-home"></i> Trang chủ
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search">
-                            <i class="fas fa-search"></i> Tìm kiếm
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/telegram">
-                            <i class="fab fa-telegram"></i> Telegram
-                        </a>
-                    </li>
+            <div class="flex-none lg:hidden">
+                <label for="my-drawer-3" class="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </label>
+            </div>
+            <div class="flex-none hidden lg:block">
+                <ul class="menu menu-horizontal">
+                    <li><a href="/" class="flex items-center text-base-content hover:text-primary"><i data-lucide="home" class="mr-1 w-4 h-4"></i> Trang chủ</a></li>
+                    <li><a href="/search" class="flex items-center text-base-content hover:text-primary"><i data-lucide="search" class="mr-1 w-4 h-4"></i> Tìm kiếm</a></li>
                 </ul>
+            </div>
+            <div class="flex-none ml-auto">
+                <button class="btn btn-square btn-ghost" id="theme-toggle">
+                    <i data-lucide="moon" id="moon-icon" class="w-5 h-5"></i>
+                    <i data-lucide="sun" id="sun-icon" class="w-5 h-5 hidden"></i>
+                </button>
+                <div class="dropdown dropdown-end z-50">
+                    <button class="btn btn-ghost ml-2" id="theme-switcher-btn" onclick="toggleDropdown()">
+                        <i data-lucide="palette" class="w-5 h-5"></i>
+                    </button>
+                    <ul tabindex="0" class="dropdown-content menu p-3 shadow bg-base-100 rounded-box w-80 max-h-80 overflow-y-auto">
+                        <li class="py-1"><a data-theme="light">Light</a></li>
+                        <li class="py-1"><a data-theme="dark">Dark</a></li>
+                        <li class="py-1"><a data-theme="cupcake">Cupcake</a></li>
+                        <li class="py-1"><a data-theme="bumblebee">Bumblebee</a></li>
+                        <li class="py-1"><a data-theme="emerald">Emerald</a></li>
+                        <li class="py-1"><a data-theme="corporate">Corporate</a></li>
+                        <li class="py-1"><a data-theme="synthwave">Synthwave</a></li>
+                        <li class="py-1"><a data-theme="retro">Retro</a></li>
+                        <li class="py-1"><a data-theme="cyberpunk">Cyberpunk</a></li>
+                        <li class="py-1"><a data-theme="valentine">Valentine</a></li>
+                        <li class="py-1"><a data-theme="halloween">Halloween</a></li>
+                        <li class="py-1"><a data-theme="garden">Garden</a></li>
+                        <li class="py-1"><a data-theme="forest">Forest</a></li>
+                        <li class="py-1"><a data-theme="aqua">Aqua</a></li>
+                        <li class="py-1"><a data-theme="lofi">Lofi</a></li>
+                        <li class="py-1"><a data-theme="pastel">Pastel</a></li>
+                        <li class="py-1"><a data-theme="fantasy">Fantasy</a></li>
+                        <li class="py-1"><a data-theme="wireframe">Wireframe</a></li>
+                        <li class="py-1"><a data-theme="black">Black</a></li>
+                        <li class="py-1"><a data-theme="luxury">Luxury</a></li>
+                        <li class="py-1"><a data-theme="dracula">Dracula</a></li>
+                        <li class="py-1"><a data-theme="cmyk">CMYK</a></li>
+                        <li class="py-1"><a data-theme="autumn">Autumn</a></li>
+                        <li class="py-1"><a data-theme="business">Business</a></li>
+                        <li class="py-1"><a data-theme="acid">Acid</a></li>
+                        <li class="py-1"><a data-theme="lemonade">Lemonade</a></li>
+                        <li class="py-1"><a data-theme="night">Night</a></li>
+                        <li class="py-1"><a data-theme="coffee">Coffee</a></li>
+                        <li class="py-1"><a data-theme="winter">Winter</a></li>
+                        <li class="py-1"><a data-theme="dim">Dim</a></li>
+                        <li class="py-1"><a data-theme="nord">Nord</a></li>
+                        <li class="py-1"><a data-theme="sunset">Sunset</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="container">
-        {{{body}}}
+    <div class="drawer">
+        <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content flex flex-col">
+            <div class="container mx-auto p-4">
+                {{{body}}}
+            </div>
+            <footer class="footer bg-base-300 text-base-content p-10 mt-auto">
+                <div class="container mx-auto text-center">
+                    <p>© 2025 Lịch Cúp Điện Việt Nam. All rights reserved.</p>
+                </div>
+            </footer>
+        </div>
+        <div class="drawer-side">
+            <label for="my-drawer-3" class="drawer-overlay"></label>
+            <ul class="menu p-4 w-80 bg-base-100">
+                <li><a href="/" class="text-base-content hover:text-primary"><i data-lucide="home" class="mr-1"></i> Trang chủ</a></li>
+                <li><a href="/search" class="text-base-content hover:text-primary"><i data-lucide="search" class="mr-1"></i> Tìm kiếm</a></li>
+            </ul>
+        </div>
     </div>
 
-    <footer class="footer">
-        <div class="container text-center">
-            <p class="mb-0">© 2025 Lịch Cúp Điện Việt Nam. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
+    <!-- Initialize Lucide Icons -->
     <script>
-        // Hiển thị loading khi submit form
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', () => {
-                const loading = document.createElement('div');
-                loading.className = 'loading';
-                loading.innerHTML = '<i class="fas fa-spinner fa-spin"></i><p>Đang xử lý...</p>';
-                form.appendChild(loading);
-                loading.style.display = 'block';
+        lucide.createIcons();
+    </script>
+    <!-- Theme Toggle and Switcher Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const moonIcon = document.getElementById('moon-icon');
+            const sunIcon = document.getElementById('sun-icon');
+            const themeSwitcherBtn = document.getElementById('theme-switcher-btn');
+            const dropdown = document.querySelector('.dropdown');
+            const root = document.documentElement;
+
+            // Check for saved theme or system preference
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            root.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            } else {
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            }
+
+            // Light/Dark Mode Toggle
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = root.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                if (newTheme === 'dark') {
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                } else {
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                }
+            });
+
+            // Theme Switcher Dropdown
+            document.querySelectorAll('.dropdown-content a[data-theme]').forEach(item => {
+                item.addEventListener('click', function() {
+                    const selectedTheme = this.getAttribute('data-theme');
+                    root.setAttribute('data-theme', selectedTheme);
+                    localStorage.setItem('theme', selectedTheme);
+                    // Update toggle icon based on selected theme brightness
+                    if (['dark', 'dracula', 'night', 'coffee', 'forest', 'black', 'luxury', 'halloween', 'synthwave', 'cyberpunk', 'dim', 'sunset'].includes(selectedTheme)) {
+                        moonIcon.classList.add('hidden');
+                        sunIcon.classList.remove('hidden');
+                    } else {
+                        moonIcon.classList.remove('hidden');
+                        sunIcon.classList.add('hidden');
+                    }
+                    dropdown.classList.remove('dropdown-open');
+                });
+            });
+
+            // Toggle dropdown on button click
+            window.toggleDropdown = function() {
+                dropdown.classList.toggle('dropdown-open');
+            };
+
+            // Ensure dropdown closes on click outside
+            document.addEventListener('click', function(event) {
+                if (!dropdown.contains(event.target) && event.target !== themeSwitcherBtn) {
+                    dropdown.classList.remove('dropdown-open');
+                }
+            });
+
+            // Ensure dropdown toggles on button click
+            themeSwitcherBtn.addEventListener('click', function(event) {
+                event.stopPropagation();
+                dropdown.classList.toggle('dropdown-open');
             });
         });
     </script>
 </body>
-</html> 
+</html>

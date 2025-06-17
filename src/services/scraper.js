@@ -1,7 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const Outage = require('../models/outage');
-const { sendTelegramNotification } = require('./telegram');
 
 const PROVINCES = [
   { name: "Hà Nội", url: "https://lichcupdien.org/lich-cup-dien-ha-noi" },
@@ -145,9 +144,6 @@ async function scrapeOutages() {
         if (!existingOutage) {
           const newOutage = new Outage(outage);
           await newOutage.save();
-          if (typeof sendTelegramNotification === 'function') {
-            await sendTelegramNotification(newOutage);
-          }
         }
       }
 
@@ -161,4 +157,4 @@ async function scrapeOutages() {
 module.exports = {
   scrapeOutages,
   PROVINCES
-}; 
+};
