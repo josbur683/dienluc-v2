@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', function() {
                   </p>
                   <p class="mb-2 flex items-center">
                     <i data-lucide="clock" class="mr-1.5 w-3.5 h-3.5"></i> Thời gian: 
-                    <span class="badge badge-warning py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                    <span class="badge badge-warning py-1.5 px-2.5">
                       ${new Date(o.startTime).toLocaleString('vi-VN')} - ${new Date(o.endTime).toLocaleString('vi-VN')}
                     </span>
                   </p>
@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', function() {
                   </p>
                 </div>
                 <div class="col-span-1">
-                  <span class="badge badge-primary mb-2 py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                  <span class="badge badge-primary mb-2 py-1.5 px-2.5">
                     <i data-lucide="building" class="mr-1 w-3.5 h-3.5"></i> ${o.powerCompany || 'Không rõ'}
                   </span>
                   <br>
@@ -252,7 +252,7 @@ window.addEventListener('DOMContentLoaded', function() {
                                     </p>
                                     <p class="mb-2 flex items-center">
                                         <i data-lucide="clock" class="mr-1.5 w-3.5 h-3.5"></i> Thời gian: 
-                                        <span class="badge badge-warning py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                                        <span class="badge badge-warning py-1.5 px-2.5">
                                             {{formatDate this.startTime}} - {{formatDate this.endTime}}
                                         </span>
                                     </p>
@@ -265,7 +265,7 @@ window.addEventListener('DOMContentLoaded', function() {
                                     </p>
                                 </div>
                                 <div class="col-span-1">
-                                    <span class="badge badge-primary mb-2 py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                                    <span class="badge badge-primary mb-2 py-1.5 px-2.5">
                                         <i data-lucide="building" class="mr-1 w-3.5 h-3.5"></i> {{#if this.powerCompany}}{{this.powerCompany}}{{else}}Không rõ{{/if}}
                                     </span>
                                     <br>
@@ -394,7 +394,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     </p>
                     <p class="mb-2 flex items-center">
                       <i data-lucide="clock" class="mr-1.5 w-3.5 h-3.5"></i> Thời gian: 
-                      <span class="badge badge-warning py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                      <span class="badge badge-warning py-1.5 px-2.5">
                         ${new Date(o.startTime).toLocaleString('vi-VN')} - ${new Date(o.endTime).toLocaleString('vi-VN')}
                       </span>
                     </p>
@@ -407,7 +407,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     </p>
                   </div>
                   <div class="col-span-1">
-                    <span class="badge badge-primary mb-2 py-1.5 px-2.5 truncate" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                    <span class="badge badge-primary mb-2 py-1.5 px-2.5">
                       <i data-lucide="building" class="mr-1 w-3.5 h-3.5"></i> ${o.powerCompany || 'Không rõ'}
                     </span>
                     <br>
